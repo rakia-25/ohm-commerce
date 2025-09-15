@@ -1,0 +1,55 @@
+<div class="max-w-6xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Produits</h1>
+
+    <%= link_to "Nouveau produit" , new_admin_product_path,
+        class: "bg-indigo-600 text-white px-3 py-2 rounded mb-3 inline-block" %>
+
+        <table class="min-w-full bg-white shadow rounded">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-2 text-left">Nom</th>
+                    <th class="px-4 py-2 text-left">Catégorie</th>
+                    <th class="px-4 py-2 text-left">Prix</th>
+                    <th class="px-4 py-2 text-left">Unité</th>
+                    <th class="px-4 py-2 text-left">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% (@products || []).each do |product| %>
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-4 py-2">
+                            <%= product.name %>
+                        </td>
+                        <td class="px-4 py-2">
+                            <%= product.category&.name || "-" %>
+                        </td>
+                        <td class="px-4 py-2">
+                            <%= product.formatted_price %>
+                        </td>
+                        <td class="px-4 py-2">
+                            <%= product.unit %>
+                        </td>
+                        <td class="px-4 py-2 flex gap-2">
+                            <% if product.slug.present? %>
+                                <%= link_to "Voir" , admin_product_path(product), class: "text-green-600" %>
+                                    <% else %>
+                                        <span class="text-gray-400">Voir</span>
+                                        <% end %>
+
+                                            <%= link_to "Éditer" , edit_admin_product_path(product),
+                                                class: "text-blue-600" %>
+
+                                                <% if product.slug.present? %>
+                                                    <%= button_to "Supprimer" , admin_product_path(product), method:
+                                                        :delete, data: { confirm: "Confirmer ?" },
+                                                        class: "text-red-600 bg-transparent border-0 p-0" %>
+                                                        <% else %>
+                                                            <span class="text-gray-400">Supprimer</span>
+                                                            <% end %>
+                        </td>
+                    </tr>
+                    <% end %>
+            </tbody>
+        </table>
+</div>

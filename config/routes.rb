@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :products
   end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Routes publiques
+  root "public#home"
+  get 'produits/:id', to: 'public#show', as: :public_product
+  resources :categories, only: [:show], controller: 'public', as: :public_category
 end

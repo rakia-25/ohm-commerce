@@ -1,0 +1,36 @@
+<div class="max-w-2xl mx-auto p-4 bg-white rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">
+        <%= @product.name %>
+    </h1>
+
+    <% if @product.image.attached? %>
+        <div class="mb-4">
+            <%= image_tag @product.image, class: "w-full h-auto rounded" %>
+        </div>
+        <% end %>
+
+            <p class="mb-2"><strong>Catégorie :</strong>
+                <%= @product.category.name %>
+            </p>
+            <p class="mb-2"><strong>Prix :</strong>
+                <%= @product.formatted_price %>
+            </p>
+            <p class="mb-2"><strong>Unité :</strong>
+                <%= @product.unit %>
+            </p>
+
+            <% if @product.description.present? %>
+                <p class="mb-4"><strong>Description :</strong>
+                    <%= @product.description %>
+                </p>
+                <% end %>
+
+                    <div class="flex gap-2">
+                        <%= link_to "Éditer" , edit_admin_product_path(@product),
+                            class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+                            <%= button_to "Supprimer" , admin_product_path(@product), method: :delete, data: {
+                                confirm: "Confirmer ?" }, class: "bg-red-600 text-white px-4 py-2 rounded" %>
+                                <%= link_to "Retour" , admin_products_path,
+                                    class: "bg-gray-200 text-gray-800 px-4 py-2 rounded" %>
+                    </div>
+</div>

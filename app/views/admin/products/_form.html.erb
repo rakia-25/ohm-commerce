@@ -1,0 +1,36 @@
+<%= form_with model: [:admin, @product], local: true, html: { multipart: true } do |f| %>
+    <div class="mb-4">
+        <%= f.label :name, "Nom du produit" , class: "block font-medium mb-1" %>
+            <%= f.text_field :name, class: "border rounded px-3 py-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+        <%= f.label :description, "Description" , class: "block font-medium mb-1" %>
+            <%= f.text_area :description, class: "border rounded px-3 py-2 w-full" , rows: 3 %>
+    </div>
+
+    <div class="mb-4">
+        <%= f.label :price_cents, "Prix (en XOF)" , class: "block font-medium mb-1" %>
+            <%= f.number_field :price_cents, class: "border rounded px-3 py-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+        <%= f.label :unit, "Unité de vente" , class: "block font-medium mb-1" %>
+            <%= f.select :unit, ["kg", "sachet" , "unité" , "tasse" ], {}, class: "border rounded px-3 py-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+        <%= f.label :category_id, "Catégorie" , class: "block font-medium mb-1" %>
+            <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: "Choisir une catégorie" },
+                class: "border rounded px-3 py-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+        <%= f.label :image, "Image du produit" , class: "block font-medium mb-1" %>
+            <%= f.file_field :image, class: "border rounded px-3 py-2 w-full" %>
+    </div>
+
+    <div>
+        <%= f.submit class: "bg-indigo-600 text-white px-4 py-2 rounded" %>
+    </div>
+    <% end %>
