@@ -1,0 +1,16 @@
+<%= form_with model: [:admin, @category], local: true do |f| %>
+    <div class="mb-4">
+        <%= f.label :name, "Nom de la catégorie" , class: "block font-medium mb-1" %>
+            <%= f.text_field :name, class: "border rounded px-3 py-2 w-full" %>
+
+                <% if @category.errors[:name].any? %>
+                    <p class="text-red-600 mt-1">
+                        <%= @category.errors[:name].first %>
+                    </p>
+                    <% end %>
+    </div>
+
+    <div>
+        <%= f.submit "Enregistrer" , class: "bg-indigo-600 text-white px-4 py-2 rounded" %>
+    </div>
+    <% end %>

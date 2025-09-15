@@ -1,17 +1,35 @@
 class Product < ApplicationRecord
   belongs_to :category
-  has_one_attached :image
+  has_one_attached :image # si ActiveStorage est utilisé
 
-  validates :name, :price_cents, :unit, presence: true
+  before_save :generate_slug # garantit que le slug existe avant la sauvegarde
+
+  validates :name, presence: true
   validates :slug, uniqueness: true
 
-  # Prix en XOF
-  def price
-    price_cents.to_f / 100
+  def to_param
+    slug
   end
 
-  # Affichage formaté : ex "1 500 XOF / kg"
+  # Prix formaté (exemple : "500 XOF")
   def formatted_price
-    "#{ActionController::Base.helpers.number_to_currency(price, unit: 'XOF', delimiter: ' ', separator: ',')} / #{unit}"
+    "#{price_cents} XOF"
+  end
+
+  private
+
+  def generate_slug
+    if self.slug.blank? && self.name.present?
+      base_slug = name.parameterize
+      unique_slug = base_slug
+      counter = 2
+
+      while Product.exists?(slug: unique_slug)
+        unique_slug = "#{base_slug}-#{counter}"
+        counter += 1
+      end
+
+      self.slug = unique_slug
+    end
   end
 end
